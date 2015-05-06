@@ -1,0 +1,125 @@
+
+<!-- http://aerotwist.com/tutorials/an-introduction-to-shaders-part-1/ -->
+
+<html>
+<head>
+<title>Graphics practical work</title>
+</head>
+<body style="font-family: Consolas,monaco,monospace; font-size: 18px; margin:16px;">
+<canvas id="scrn_canv" style="border: 1px solid #CCC;"></canvas>
+<script>
+
+img_w_px = window.innerWidth - 50;
+img_h_px = window.innerHeight - 50;
+
+// find the canvas in the webpage, and get access to its data
+var canvas = document.getElementById("scrn_canv");
+var context2d = canvas.getContext("2d");
+var img_data = context2d.getImageData(0, 0, img_w_px, img_h_px);
+
+// set the size of the canvas
+canvas.width = img_w_px;
+canvas.height = img_h_px;
+
+// this function sets the color of pixels in the canvas data
+function setPixel(x, y, r, g, b) {
+	var i = (y * img_w_px + x) * 4;
+	img_data.data[i++] = r;
+	img_data.data[i++] = g;
+	img_data.data[i++] = b;
+	img_data.data[i] = 255;
+}
+
+// ***********************************************************
+// WRITE YOUR CODE BELOW :
+// ***********************************************************
+
+
+
+
+var P = [{
+		x : 100,
+	  	y : 100,
+	  	R : 100
+	 },
+	 {
+		x : 200,
+	  	y : 100,
+	  	R : 50
+	 },
+	 {
+		x : 250,
+	  	y : 300,
+	  	R : 100
+	 }];
+
+function getContribution(x, y, Point){
+
+	var d_squared = Math.pow(x-Point.x, 2) + Math.pow(y-Point.y, 2);
+
+	if (d_squared <= Math.pow(Point.R, 2)){
+		return 1 - 4/9 * Math.pow(d_squared, 3) / Math.pow(Point.R, 6)
+				 + 17/9 * Math.pow(d_squared, 2) / Math.pow(Point.R, 4) 
+				 - 22/9 * d_squared / Math.pow(Point.R, 2);
+	}
+	else{
+		return 0;
+	}
+
+}
+
+function drawCanvas(){
+	for (y=0; y<canvas.height; y++){
+		for(x=0; x<canvas.width; x++){
+
+			var c = 0;
+
+			for(var i = 0; i < P.length; i++){
+				c += getContribution(x, y, P[i]);
+			}
+
+			if(c >= 0.5){
+				setPixel(x, y, x/canvas.width*256, y/canvas.width*256, 128);
+			}
+			else{
+				setPixel(x, y, 255, 255, 255);
+			}
+			
+		}
+	}
+
+	// final call is to put the data into the canvas
+	context2d.putImageData(img_data, 0, 0);
+}
+
+
+canvas.addEventListener("mousedown", onMouseDown, false);
+
+function onMouseDown(e){
+	mouse = getPosition(e);
+
+	P.push({x: mouse.x,
+			y: mouse.y,
+			R: Math.random() * 100 + 100});
+
+	drawCanvas();
+}
+
+function getPosition(e)
+{
+  var x = e.x;
+  var y = e.y;
+
+  x -= canvas.offsetLeft;
+  y -= canvas.offsetTop;
+
+  return {x:x, y:y};
+}
+
+
+drawCanvas();
+
+
+</script>
+</body>
+</html>
