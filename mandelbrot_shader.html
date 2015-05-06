@@ -147,7 +147,7 @@ attribute vec2 a_position;
 		} else {
 			float red = float(steps)/float(NUM_STEPS)*abs(sin(gl_FragCoord.y/400.0+time/1000.0)+1.0) * gl_FragCoord.x / 1280.0;
 
-			float green = ((float(steps)+50.0)/(float(NUM_STEPS)+50.0)*abs(sin(gl_FragCoord.y/400.0+time/1000.0)+1.0) *gl_FragCoord.y / 960.0)*0.7 + 0.3;
+			float green = ((float(steps)+50.0)/(float(NUM_STEPS)+50.0)*abs(sin(gl_FragCoord.y/400.0+time/890.0)+1.0) *gl_FragCoord.y / 960.0)*0.7 + 0.3;
 
 			float blue = (float(steps)+50.0)/(float(NUM_STEPS)+50.0)*abs(cos(time/1300.0)+1.0)*0.5 + 0.5;
 
