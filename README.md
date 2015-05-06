@@ -1,1 +1,1 @@
-Some toys I made for my graphics course using shaders.
+Some toys I made for my graphics course.
