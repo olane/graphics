@@ -23,7 +23,7 @@
 
 		gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 
-		// Buffer setup
+		// Buffer setup: we're going to make a quad the size of the screen, which we'll draw on with our shader.
 		buffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 		gl.bufferData(
